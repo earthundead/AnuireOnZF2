@@ -1,0 +1,143 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+	<title>Ануир. Таблицы</title>
+</head>
+<body>
+	
+<h1>Известные данные об Ануире в таблицах</h1>
+
+<?php
+
+function out($string)
+{
+global $logger;
+if(isset($logger))
+	$logger->info($string);
+}
+
+out("использован вывод таблиц");
+
+class TMyTableView
+	{
+	private $PagesCount;
+	private $RowCount;
+	private $ColCount;
+
+	private function DataAnalyse()	
+		{
+		//Функция проверяет являются ли данные таблицей
+		for ($i=0; $i<10; $i++)
+			{
+			for ($j=0; $j<5; $j++)
+				$row[] = "Anuire no data";
+			$blankTable[] = $row;
+			}
+		
+		//являются ли данные таблицей
+		$Curr=$this->DataToView;
+		$i=0;
+		while(count($Curr)>1)
+			{
+			$Curr=$Curr[0];			
+			$i++;
+			}
+		out(" размерность массива входных данных вывода таблиц = $i ");
+		
+		if(($i>3)||($i<1))
+			{
+			out("Ошибка размерности массива входных данных blankTable used");
+			$this->DataToView = $blankTable;
+			}
+		
+		//Определяем размерность массива
+		$Curr=$this->DataToView;
+		if($i==3)
+			{
+			$this->PagesCount=count($Curr);
+			$Curr=$Curr[0];
+			$i--;
+			}
+		if($i==2)
+			{
+			$this->RowCount=count($Curr);
+			$Curr=$Curr[0];
+			$i--;
+			}
+		if($i==1)
+			{
+			$this->ColCount=count($Curr);
+			$Curr=$Curr[0];
+			$i--;
+			}
+		// Сначала идёт Row, потм Col
+		return $i;
+		}
+		
+	private function PrintTable($Table,$Header="",$Name="")	
+		{
+		//проверяем корректность ввода
+		$RowCount=count($Table);
+		$Row = $Table[0];
+		$ColCount=count($Row);
+		if($ColCount<2&&$RowCount<2){out("Ошибка массива входных данных");return;}
+		// Выводим заголовок таблицы:
+		if($Name!="")
+			echo "$Name";
+		echo "<table border=\"1\" width=\"100%\" bgcolor=\"#FFFFE1\">";
+		if($Header!="")
+			{
+			echo "<tr>";
+			for ($i=0; $i<$ColCount; $i++)
+				{
+				$Out=$Header[$i];
+				echo "<td>$Out</td>";
+				}
+			echo "</tr>";
+			}
+		// Выводим саму таблицу:
+		for ($i=0; $i<$RowCount; $i++)
+			{
+			echo "<tr>";
+			$Row = $Table[$i];
+			for ($j=0; $j<$ColCount; $j++)
+				{
+				$td = $Row[$j];
+				echo "<td>$td</td>";
+				}
+			echo "</tr>";
+			}
+		echo "</table>";
+		}
+
+	//Основной интерфейс
+	public function Show()		//Показывает всё
+		{
+		$this->DataAnalyse();
+		if($this->PagesCount>0)
+			for ($i=0; $i<$this->PagesCount; $i++)
+				{
+				if(isset($this->TableHeader[$i]))$Header=$this->TableHeader[$i];
+				if(isset($this->TableNames[$i]))$Name=$this->TableNames[$i];
+				$this->PrintTable($this->DataToView[$i],$Header,$Name);
+				}
+		else
+			$this->PrintTable($this->DataToView,$this->TableHeader[0],$this->TableNames[0]);	//плохо работает
+		}
+
+	public $DataToView;
+	public $TableHeader;
+	public $TableNames;
+	}
+
+//Выводим 3 таблицы
+$View1 = new TMyTableView;
+$View1 -> DataToView  = $this->Tables;
+$View1 -> TableHeader = $this->Headers;
+$View1 -> TableNames  = $this->Names;
+$View1 -> Show();
+?>
+
+</body>
+</html>
+
