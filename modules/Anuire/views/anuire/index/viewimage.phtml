@@ -6,18 +6,35 @@
 <body>
 
 <h1>Карта Ануира.</h1>
-Города обзначены чёрным цветом. Дороги между городами обозначены красным. 
-Незначительные детали обозначены белым цветом.
+Города обзначены и подписаны чёрным цветом. Дороги между городами обозначены красным. 
 Если найден кратчайший путь между двумя городами, он на карте обозначается синими стрелками.
+Незначительные детали обозначаются белым цветом.
 
 <?php
 if($logger)
 	$logger -> info("image file : " . $path . "/map.png");
+
+//header("Content-type: image/png");
+//$image = imagecreatefrompng( $path . "/map.png");
+	
+$imgfile   = $path . '/map.png';
+$handle    = fopen($imgfile, "r");
+$imgbinary = fread($handle , filesize($imgfile));
+$imgString = base64_encode($imgbinary);
+?>	
+
+<img src="data:image/png;base64, <?php echo $imgString; ?> " alt="Error"/>
+
+<?php
+/*echo '<img src="data:image/png;base64,' . $imgString . '" alt="Error" />';*/ 
+/*
+echo '<img src="imagepng($image); " width="95%" height="95%" alt="Error">'; // не работает
+echo '<img src=' . $path . "/map.png" . ' alt="Error" >';
+echo '<img src="/../data/map.png" width="100%" height="95%" alt="Error" />';
 $pathReal = realpath("../data");	
 if($logger)
 	$logger -> info("pathReal : " . $pathReal);
+*/
 ?>	
-
-<img src="<?php echo $path . '/map.png'; ?>" width="100%" height="95%" alt="Error: <?php echo $path . '/map.png'; ?>">
 </body>
 </html>

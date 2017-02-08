@@ -44,6 +44,23 @@ class IndexController extends AbstractActionController {
 		$view->setTerminal(true);
 		return $view;
 		}
+		
+    public function viewimage2Action() 
+		{
+		$logger = $this->getServiceLocator()->get('logger');	
+		$logger -> info(" Anuire controller viewimageAction called. ");
+		
+		$config = $this->getServiceLocator()->get('myconfig');
+		$path = $config["path"]["data"];
+		$logger -> info("data path: $path");
+		
+		$view = new ViewModel();
+		$view->setTemplate('anuire/index/viewimage2');
+		$view->path = $path;
+		$view->logger = $logger;
+		$view->setTerminal(true);
+		return $view;
+		}
         
 	public function viewtestAction() 
 		{
