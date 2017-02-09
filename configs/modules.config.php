@@ -8,6 +8,7 @@ return [
     //'Zend\Router',
     //'Zend\Validator',
     'Anuire',
+    'Blog',
     //'DirectDraw',
     //'Application',
     //'ZendSkeletonModule',

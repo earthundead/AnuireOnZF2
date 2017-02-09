@@ -8,6 +8,7 @@ set_include_path($new_include_path);
 require_once 'Zend/Loader/StandardAutoloader.php';
 $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
 $loader->registerNamespace('Anuire', __DIR__ . '/../modules/Anuire/src');
+$loader->registerNamespace('Blog', __DIR__ . '/../modules/Blog/src');
 $loader->register();
 
 //Создание логфайла и организация логгинга
